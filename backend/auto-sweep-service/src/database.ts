@@ -59,6 +59,41 @@ export class WalletDatabase {
       CREATE INDEX IF NOT EXISTS idx_last_checked ON auto_sweep_wallets(last_checked);
       CREATE INDEX IF NOT EXISTS idx_wallet_address ON sweep_history(wallet_address);
     `);
+
+    // Payment links table
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS payment_links (
+        id TEXT PRIMARY KEY,
+        creator_address TEXT NOT NULL,
+        recipient_address TEXT,
+        amount TEXT,
+        description TEXT,
+        created_at INTEGER NOT NULL,
+        expires_at INTEGER,
+        claim_count INTEGER DEFAULT 0,
+        max_claims INTEGER DEFAULT 1,
+        is_active INTEGER DEFAULT 1
+      )
+    `);
+
+    // Payment claims table
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS payment_claims (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        link_id TEXT NOT NULL,
+        payer_address TEXT NOT NULL,
+        amount TEXT NOT NULL,
+        tx_hash TEXT NOT NULL,
+        claimed_at INTEGER NOT NULL,
+        FOREIGN KEY (link_id) REFERENCES payment_links(id)
+      )
+    `);
+
+    // Payment link indexes
+    this.db.exec(`
+      CREATE INDEX IF NOT EXISTS idx_payment_creator ON payment_links(creator_address);
+      CREATE INDEX IF NOT EXISTS idx_payment_link_claims ON payment_claims(link_id);
+    `);
   }
 
   // Add wallet for auto-sweep monitoring
