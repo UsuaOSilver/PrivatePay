@@ -8,7 +8,7 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use tower_http::cors::CorsLayer;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use alloy::{
     primitives::{Address, U256, Bytes, FixedBytes, keccak256},
     providers::{Provider, ProviderBuilder},
@@ -16,6 +16,7 @@ use alloy::{
     sol,
     sol_types::SolCall,
 };
+use rusqlite::Connection;
 
 // Define Deployer contract interface
 sol! {
@@ -45,10 +46,20 @@ async fn main() {
         .parse()
         .unwrap();
 
+    // Setup database connection
+    let db_path = std::env::var("DATABASE_PATH")
+        .unwrap_or_else(|_| "./auto_sweep.db".to_string());
+
+    let conn = Connection::open(&db_path)
+        .expect("Failed to open database");
+
+    println!("📊 Database connected: {}", db_path);
+
     // Create app state
     let state = Arc::new(AppState {
         provider,
         deployer_address,
+        db: Arc::new(Mutex::new(conn)),
     });
 
     // Build router
@@ -57,6 +68,9 @@ async fn main() {
         .route("/api/compute-address", post(compute_address))
         .route("/api/balance/:address", get(get_balance))
         .route("/api/balance-usdc/:address", get(get_usdc_balance))
+        .route("/api/enable-auto-sweep", post(enable_auto_sweep))
+        .route("/api/disable-auto-sweep", post(disable_auto_sweep))
+        .route("/api/sweep-history/:address", get(get_sweep_history))
         .with_state(state)
         .layer(CorsLayer::permissive());
 
@@ -74,6 +88,7 @@ async fn main() {
 struct AppState {
     provider: alloy::providers::RootProvider<Http<reqwest::Client>>,
     deployer_address: Address,
+    db: Arc<Mutex<Connection>>,
 }
 
 async fn health_check() -> Json<Value> {
@@ -205,5 +220,147 @@ async fn get_usdc_balance(
         "balance": "0",
         "balance_usdc": "0.000000",
         "has_funds": false
+    })))
+}
+
+// Auto-sweep endpoints
+
+#[derive(Deserialize)]
+struct AutoSweepRequest {
+    address: String,
+    owner: String,
+    salt: String,
+}
+
+async fn enable_auto_sweep(
+    State(state): State<Arc<AppState>>,
+    Json(payload): Json<AutoSweepRequest>,
+) -> Result<Json<Value>, StatusCode> {
+    let db = state.db.lock().unwrap();
+
+    // Check if wallet already exists
+    let exists: bool = db.query_row(
+        "SELECT COUNT(*) FROM auto_sweep_wallets WHERE address = ?1",
+        [&payload.address],
+        |row| row.get::<_, i64>(0).map(|count| count > 0)
+    ).map_err(|e| {
+        eprintln!("Database error checking wallet: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    if exists {
+        return Ok(Json(json!({
+            "success": true,
+            "message": "Wallet already in auto-sweep monitoring",
+            "address": payload.address
+        })));
+    }
+
+    // Insert wallet into database
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_millis() as i64;
+
+    db.execute(
+        "INSERT INTO auto_sweep_wallets (address, owner, salt, created_at, last_checked, sweep_count) VALUES (?1, ?2, ?3, ?4, 0, 0)",
+        rusqlite::params![&payload.address, &payload.owner, &payload.salt, now],
+    ).map_err(|e| {
+        eprintln!("Database error inserting wallet: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    println!("✅ Enabled auto-sweep for wallet: {}", payload.address);
+
+    Ok(Json(json!({
+        "success": true,
+        "message": "Auto-sweep enabled successfully",
+        "address": payload.address,
+        "owner": payload.owner
+    })))
+}
+
+async fn disable_auto_sweep(
+    State(state): State<Arc<AppState>>,
+    Json(payload): Json<AutoSweepRequest>,
+) -> Result<Json<Value>, StatusCode> {
+    let db = state.db.lock().unwrap();
+
+    // Remove wallet from database
+    let rows_affected = db.execute(
+        "DELETE FROM auto_sweep_wallets WHERE address = ?1",
+        [&payload.address],
+    ).map_err(|e| {
+        eprintln!("Database error removing wallet: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    if rows_affected == 0 {
+        return Ok(Json(json!({
+            "success": true,
+            "message": "Wallet was not in auto-sweep monitoring",
+            "address": payload.address
+        })));
+    }
+
+    println!("❌ Disabled auto-sweep for wallet: {}", payload.address);
+
+    Ok(Json(json!({
+        "success": true,
+        "message": "Auto-sweep disabled successfully",
+        "address": payload.address
+    })))
+}
+
+#[derive(Serialize)]
+struct SweepHistoryItem {
+    id: i64,
+    #[serde(rename = "walletAddress")]
+    wallet_address: String,
+    #[serde(rename = "txHash")]
+    tx_hash: String,
+    amount: String,
+    timestamp: i64,
+    recipient: String,
+}
+
+async fn get_sweep_history(
+    Path(address): Path<String>,
+    State(state): State<Arc<AppState>>,
+) -> Result<Json<Value>, StatusCode> {
+    let db = state.db.lock().unwrap();
+
+    let mut stmt = db.prepare(
+        "SELECT id, wallet_address, tx_hash, amount, timestamp, recipient
+         FROM sweep_history
+         WHERE wallet_address = ?1
+         ORDER BY timestamp DESC
+         LIMIT 50"
+    ).map_err(|e| {
+        eprintln!("Database error preparing statement: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    let history_iter = stmt.query_map([&address], |row| {
+        Ok(SweepHistoryItem {
+            id: row.get(0)?,
+            wallet_address: row.get(1)?,
+            tx_hash: row.get(2)?,
+            amount: row.get(3)?,
+            timestamp: row.get(4)?,
+            recipient: row.get(5)?,
+        })
+    }).map_err(|e| {
+        eprintln!("Database error querying history: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    let history: Vec<SweepHistoryItem> = history_iter
+        .filter_map(|item| item.ok())
+        .collect();
+
+    Ok(Json(json!({
+        "success": true,
+        "history": history
     })))
 }

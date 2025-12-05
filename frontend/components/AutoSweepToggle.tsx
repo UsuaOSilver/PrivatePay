@@ -38,7 +38,8 @@ export function AutoSweepToggle({ walletAddress, salt, initialEnabled = false }:
       })
 
       if (!response.ok) {
-        throw new Error('Failed to toggle auto-sweep')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || 'Failed to toggle auto-sweep')
       }
 
       const newState = !isEnabled
@@ -55,7 +56,22 @@ export function AutoSweepToggle({ walletAddress, salt, initialEnabled = false }:
       }
     } catch (error) {
       console.error('Error toggling auto-sweep:', error)
-      toast.error('Failed to toggle auto-sweep')
+      const errorMessage = error instanceof Error ? error.message : 'Failed to toggle auto-sweep'
+
+      // Show specific error for common cases
+      if (errorMessage.includes('balance') || errorMessage.includes('0')) {
+        toast.error('Cannot enable auto-sweep', {
+          description: 'Wallet must have a balance > 0 USDC to enable auto-sweep monitoring',
+        })
+      } else if (errorMessage.includes('not found') || errorMessage.includes('404')) {
+        toast.error('Auto-sweep service unavailable', {
+          description: 'Backend API is not responding. Please try again later.',
+        })
+      } else {
+        toast.error('Failed to toggle auto-sweep', {
+          description: errorMessage,
+        })
+      }
     } finally {
       setIsLoading(false)
     }

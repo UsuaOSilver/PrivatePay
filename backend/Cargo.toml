@@ -17,9 +17,13 @@ alloy = { version = "0.3", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
+# Database
+rusqlite = { version = "0.32", features = ["bundled"] }
+
 # Utilities
 hex = "0.4"
 dotenv = "0.15"
 anyhow = "1.0"
 rand = "0.8"
 reqwest = "0.12.24"
+chrono = "0.4"
