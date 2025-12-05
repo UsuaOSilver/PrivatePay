@@ -69,8 +69,55 @@ body {
   }
 }
 
+@keyframes scroll-up {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-scroll-up {
+  animation: scroll-up 20s linear infinite;
+}
+
+.animate-scroll-down {
+  animation: scroll-down 20s linear infinite;
+}
+
 .neon-text {
   animation: neonPulse 2s ease-in-out infinite;
+}
+
+.neon-text-gradient {
+  position: relative;
+  filter: drop-shadow(0 0 20px var(--arcade-pink))
+          drop-shadow(0 0 40px var(--primary))
+          drop-shadow(0 0 60px var(--arcade-purple));
+  animation: gradientGlow 3s ease-in-out infinite;
+}
+
+@keyframes gradientGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px var(--arcade-pink))
+            drop-shadow(0 0 40px var(--primary))
+            drop-shadow(0 0 60px var(--arcade-purple));
+  }
+  50% {
+    filter: drop-shadow(0 0 30px var(--arcade-pink))
+            drop-shadow(0 0 60px var(--primary))
+            drop-shadow(0 0 90px var(--arcade-purple));
+  }
 }
 
 .arcade-button {

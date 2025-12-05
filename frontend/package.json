@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@base-org/account": "^2.5.0",
+    "@coinbase/onchainkit": "^1.1.2",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@gemini-wallet/core": "^0.3.2",
     "@metamask/sdk": "^0.34.0",
@@ -26,8 +27,8 @@
     "react-dom": "19.2.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
-    "viem": "^2.0.0",
-    "wagmi": "^2.9.0"
+    "viem": "2.x",
+    "wagmi": "2.x"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

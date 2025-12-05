@@ -70,6 +70,16 @@ export function CreatePaymentLink() {
     }
   }
 
+  const shareOnFarcaster = () => {
+    if (createdLink) {
+      const text = description
+        ? `💸 ${description} - Pay me ${amount} USDC on Coinflip!`
+        : `💸 Pay me ${amount} USDC on Coinflip!`
+      const castUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(createdLink.url)}`
+      window.open(castUrl, '_blank')
+    }
+  }
+
   const resetForm = () => {
     setCreatedLink(null)
     setAmount('')
@@ -122,25 +132,31 @@ export function CreatePaymentLink() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="grid grid-cols-2 gap-3 mb-3">
           <button
             onClick={copyLink}
-            className="flex-1 bg-[var(--success)] text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wide hover:bg-[var(--success)]/80 transition-colors"
+            className="bg-[var(--success)] text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wide hover:bg-[var(--success)]/80 transition-colors text-sm"
           >
-            📋 Copy Link
+            📋 Copy
           </button>
           <button
-            onClick={resetForm}
-            className="flex-1 bg-gray-700 text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wide hover:bg-gray-600 transition-colors"
+            onClick={shareOnFarcaster}
+            className="bg-[#8a63d2] text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wide hover:bg-[#7a53c2] transition-colors text-sm"
           >
-            Create Another
+            🟣 Cast
           </button>
         </div>
+        <button
+          onClick={resetForm}
+          className="w-full bg-gray-700 text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wide hover:bg-gray-600 transition-colors text-sm"
+        >
+          Create Another
+        </button>
 
         {/* Expires info */}
         {createdLink.expiresAt && (
           <div className="mt-4 text-center">
-            <p className="text-xs text-gray-500">
+            <p className="text-xxs text-gray-500">
               Expires in 24 hours
             </p>
           </div>
