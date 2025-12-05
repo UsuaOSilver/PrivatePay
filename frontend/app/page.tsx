@@ -5,6 +5,11 @@ import dynamic from 'next/dynamic'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect } from 'wagmi'
 
+const GeneratePayment = dynamic(
+  () => import('../components/GeneratePayment').then(mod => ({ default: mod.GeneratePayment })),
+  { ssr: false }
+)
+
 const CreatePaymentLink = dynamic(
   () => import('../components/CreatePaymentLink').then(mod => ({ default: mod.CreatePaymentLink })),
   { ssr: false }
@@ -53,7 +58,7 @@ export default function Home() {
 
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-[var(--foreground)] mb-3 uppercase tracking-wide leading-relaxed">
+            <h2 className="text-2xl font-bold text-[var(--foreground)] mb-3 uppercase tracking-wide leading-relaxed">
               Flip USDC to Anyone, Instantly
             </h2>
             <p className="text-xs text-gray-500">
@@ -63,7 +68,10 @@ export default function Home() {
 
           <WalletHistory onSelectWallet={(address, salt) => setSelectedWallet({ address, salt })} />
 
-          <CreatePaymentLink />
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <GeneratePayment />
+            <CreatePaymentLink />
+          </div>
 
           <div className="mt-8 text-center">
             <p className="text-xs text-gray-400 uppercase tracking-widest">

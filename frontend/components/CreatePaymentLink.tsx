@@ -152,7 +152,7 @@ export function CreatePaymentLink() {
   return (
     <div className="retro-card rounded-2xl p-8 border-2 border-[var(--accent)]">
       <div className="text-center mb-6">
-        <div className="text-6xl mb-4">🔗</div>
+        <div className="text-6xl mb-4 animate-bounce">🔗</div>
         <h3 className="text-xl font-bold text-[var(--accent)] mb-2 uppercase">
           Create Payment Link
         </h3>
@@ -198,7 +198,7 @@ export function CreatePaymentLink() {
         disabled={loading || !amount}
         className="arcade-button w-full bg-gradient-to-r from-[var(--accent)] to-[var(--arcade-blue)] text-white px-6 py-4 rounded-lg font-bold text-lg uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? '⏳ Creating...' : '✨ Create Payment Link'}
+        {loading ? '⏳ Creating...' : '✨ START'}
       </button>
 
       <div className="mt-4 text-center">

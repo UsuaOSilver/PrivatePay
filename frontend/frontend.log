@@ -1,0 +1,71 @@
+
+> frontend@0.1.0 dev /home/aka79/PrivatePay/frontend
+> next dev --webpack
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/aka79/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /home/aka79/PrivatePay/frontend/pnpm-lock.yaml
+   * /home/aka79/PrivatePay/pnpm-lock.yaml
+
+   ▲ Next.js 16.0.7 (webpack)
+   - Local:         http://localhost:3000
+   - Network:       http://10.255.255.254:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 9.6s
+ ○ Compiling / ...
+ ⨯ ./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/internal/hooks/useCapabilitiesSafe.js:3:1
+Module not found: Package path ./experimental is not exported from package /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi (see exports field in /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi/package.json)
+  1 | import { useMemo } from "react";
+  2 | import { useAccount } from "wagmi";
+> 3 | import { useCapabilities } from "wagmi/experimental";
+    | ^
+  4 | function useCapabilitiesSafe({
+  5 |   chainId
+  6 | }) {
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/hooks/useIsWalletACoinbaseSmartWallet.js
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/index.js
+./app/page.tsx
+ ⨯ ./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/internal/hooks/useCapabilitiesSafe.js:3:1
+Module not found: Package path ./experimental is not exported from package /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi (see exports field in /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi/package.json)
+  1 | import { useMemo } from "react";
+  2 | import { useAccount } from "wagmi";
+> 3 | import { useCapabilities } from "wagmi/experimental";
+    | ^
+  4 | function useCapabilitiesSafe({
+  5 |   chainId
+  6 | }) {
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/hooks/useIsWalletACoinbaseSmartWallet.js
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/index.js
+./app/page.tsx
+ ⨯ ./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/internal/hooks/useCapabilitiesSafe.js:3:1
+Module not found: Package path ./experimental is not exported from package /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi (see exports field in /home/aka79/PrivatePay/frontend/node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/wagmi/package.json)
+  1 | import { useMemo } from "react";
+  2 | import { useAccount } from "wagmi";
+> 3 | import { useCapabilities } from "wagmi/experimental";
+    | ^
+  4 | function useCapabilitiesSafe({
+  5 |   chainId
+  6 | }) {
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/hooks/useIsWalletACoinbaseSmartWallet.js
+./node_modules/.pnpm/@coinbase+onchainkit@1.1.2_@tanstack+query-core@5.90.11_@types+react-dom@19.2.3_@types+_6680bd5cbf24a04d2cf1190d6a86cc60/node_modules/@coinbase/onchainkit/dist/wallet/index.js
+./app/page.tsx
+ GET / 500 in 2.5min (compile: 2.5min, render: 513ms)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/home/aka79/PrivatePay/frontend/.next/dev/cache/webpack/client-development-fallback/2.pack.gz_' -> '/home/aka79/PrivatePay/frontend/.next/dev/cache/webpack/client-development-fallback/2.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/home/aka79/PrivatePay/frontend/.next/dev/cache/webpack/client-development-fallback/2.pack.gz_' -> '/home/aka79/PrivatePay/frontend/.next/dev/cache/webpack/client-development-fallback/2.pack.gz'
