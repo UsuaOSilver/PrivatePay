@@ -54,10 +54,10 @@ export default function Home() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[var(--foreground)] mb-3 uppercase tracking-wide leading-relaxed">
-              Insert Coin<br/>To Pay
+              Flip USDC to<br/>Anyone, Instantly
             </h2>
             <p className="text-sm text-[var(--secondary)] animate-pulse">
-              Gas-free USDC payments • Social tipping • Group splits
+              Payment links • Social tipping • Group splits • Zero gas fees
             </p>
           </div>
 
