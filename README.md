@@ -2,8 +2,6 @@
 
 **Insert Coin to Pay - Payment Links for Base**
 
-🏆 Built for MBC 2025 Hackathon | Base Track + Circle Bounty
-
 ---
 
 ## 🎮 What is Coinflip?
@@ -14,7 +12,6 @@ Coinflip is the **payment link platform for Base** that makes USDC payments as e
 
 - 🔗 **Payment Links** - Share links, accept USDC, zero gas fees
 - 💰 **Social Tipping** - One-tap tips for creators on Farcaster/Twitter
-- 🎲 **Group Splits** - Split bills with friends, auto-distribute
 - ⚡ **Gas Sponsored** - Recipients pay ZERO gas (we cover it)
 - 🕹️ **Arcade Theme** - Making crypto payments fun and approachable
 
@@ -55,7 +52,7 @@ Coinflip fixes BOTH problems with a **gas-sponsored burner wallet system**:
 │  3. Auto-Sweep (10 seconds)                         │
 │     → Relayer deploys burner + sweeps               │
 │     → Merchant receives USDC (gas-free!)            │
-│     → Customer can't track merchant's main wallet   │
+│     → Customer *can't* track merchant's main wallet s│
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -97,25 +94,7 @@ One-tap tipping for content creators
 5. Auto-sweep to your wallet (10 seconds, gas-free!)
 ```
 
-### 3. Group Payment Splits 🎲
-Split bills with friends, crypto-native
-
-**Example: Dinner Split**
-```
-Alice creates split: "Sushi Night - $120 / 4 people"
-→ Shares link: coinflip.app/split/abc123
-→ Bob, Carol, Dave each pay $30 USDC
-→ When complete: Restaurant receives $120 (gas-free!)
-→ Everyone sees "Split complete! ✅"
-```
-
-**Use cases:**
-- 🍕 Group dinner bills
-- 🎁 Shared gifts
-- 🏠 Rent/utilities splitting
-- 🎟️ Event ticket pooling
-
-### 4. Gas Abstraction ⛽
+### 3. Gas Abstraction ⛽
 **The killer feature that makes everything work:**
 
 - Relayer pays ALL gas fees
@@ -188,30 +167,9 @@ function deployAndSweepERC20(
 
 ---
 
-## 🎮 Arcade Theme
+## 🏆 MBC25 Tracks
 
-**Why arcade theme?**
-
-Privacy and crypto payments are **intimidating**. Arcade aesthetics make them **fun and approachable**.
-
-**Design Elements:**
-- 🕹️ Press Start 2P font (retro gaming)
-- 🌈 Neon color palette (cyan, magenta, yellow)
-- ✨ Pixelate and pulse animations
-- 💎 Glassmorphism cards with arcade borders
-- 🪙 Coin flip animation on address generation
-
-**Feature Naming (Arcade Style):**
-- Payment Links → "Coin Slots"
-- Group Splits → "Multiplayer Mode"
-- Tipping → "Insert Coin"
-- Auto-Sweep → "Jackpot!"
-
----
-
-## 🏆 Why This Wins the Hackathon
-
-### Base Track Alignment ⭐⭐⭐⭐⭐
+### Base Track ⭐⭐⭐⭐⭐
 
 **"Make onchain interactions simple, social, and engaging"**
 
@@ -220,7 +178,7 @@ Privacy and crypto payments are **intimidating**. Arcade aesthetics make them **
 ✅ **Engaging**: Arcade theme, 10-second "magic" auto-sweep
 ✅ **Onboarding**: Payment links = mainstream UX (like Stripe)
 
-### Circle USDC Bounty Alignment ⭐⭐⭐⭐⭐
+### Circle USDC Bounty ⭐⭐⭐⭐⭐
 
 **"Innovative USDC applications"**
 
@@ -250,36 +208,9 @@ Privacy and crypto payments are **intimidating**. Arcade aesthetics make them **
 | **Farcaster Frames** | ✅ | ⛔️ | ⛔️ | ⛔️ |
 
 **What makes Coinflip unique:**
-- ONLY platform with gas sponsorship + payment links + group splits + social tipping
+- ONLY platform with gas sponsorship + payment links + social tipping
 - Built specifically for Base + USDC (not multi-chain)
 - Arcade theme makes it memorable and fun
-
----
-
-## 🎬 Demo Flow (3 Minutes)
-
-### Scenario 1: Content Creator Tipping (1 min)
-1. Alice connects Coinbase Smart Wallet
-2. Generates tipping page: `coinflip.app/tips/alice`
-3. Posts Farcaster Frame with $1/$5/$10 buttons
-4. Bob tips $5 USDC with Face ID (one tap)
-5. **10 seconds later**: Auto-sweep complete ⚡
-6. Alice sees notification: "You received $5 from @bob"
-7. **Gas cost to Alice: $0**
-
-### Scenario 2: Group Dinner Split (1 min)
-1. 4 friends at sushi restaurant - $120 bill
-2. Alice creates split: `coinflip.app/split/sushi-night`
-3. Bob, Carol, Dave each pay $30 USDC via link
-4. When 3/4 paid, Alice pays her $30
-5. **Restaurant instantly receives $120 USDC** (gas-free)
-6. Everyone sees "Split complete! 🎉"
-
-### Scenario 3: Coffee Shop QR Code (30 sec)
-1. Coffee shop prints QR code at counter
-2. Customer scans → pays $4.50 USDC
-3. **10 seconds later**: Auto-sweep to shop owner
-4. **No gas fees, no manual sweeping, no complexity**
 
 ---
 
@@ -433,11 +364,6 @@ https://faucet.circle.com/
 
 **Solution:** Send payment link per invoice → Client pays USDC → Auto-receive (gas-free)
 
-### 👥 Friend Groups
-**Problem:** Splitting bills in crypto requires coordination + gas fees
-
-**Solution:** Create split link → Each person pays share → Auto-distribute when complete
-
 ---
 
 ## 🔒 Privacy Model (Honest Assessment)
@@ -483,8 +409,8 @@ https://faucet.circle.com/
 - ✅ CREATE2 burner wallets
 - ✅ Arcade theme UI
 - ✅ Manual sweep functionality
-- 🚧 Auto-sweep service
-- 🚧 Payment link generation
+- ✅ Auto-sweep service
+- ✅ Payment link generation
 
 ### Phase 2: Social Features (Post-Hackathon)
 - [ ] Farcaster Frame integration
@@ -506,18 +432,6 @@ https://faucet.circle.com/
 
 ---
 
-## 🤝 Contributing
-
-We're open to contributions! Areas of interest:
-- Farcaster Frame development
-- Mobile app design
-- Smart contract optimizations
-- Backend performance improvements
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) (coming soon)
-
----
-
 ## 👤 Team
 
 **Nhat Anh Nguyen** ([@UsuaOSilver](https://github.com/UsuaOSilver))
@@ -529,10 +443,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) (coming soon)
 
 ## 🙏 Acknowledgments
 
-**Inspiration:**
-- [not-so-private-transfers](https://github.com/nhtyy/not-so-private-transfers) by nhtyy
-- CREATE2 pattern popularized by Uniswap v3
-
 **Powered By:**
 - Base L2 (Coinbase)
 - Circle USDC
@@ -541,7 +451,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) (coming soon)
 
 **Built At:**
 - MBC 2025 Hackathon
-- January 2025
+- Dec 2025
 
 ---
 
@@ -562,5 +472,3 @@ MIT License - see [LICENSE](./LICENSE) for details
 ---
 
 **🪙 Coinflip - Insert Coin to Pay**
-
-*Making crypto payments as easy as arcade games* 🕹️
